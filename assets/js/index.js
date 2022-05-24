@@ -3,32 +3,26 @@ cam = document.getElementById('cam');
 const startVideo = () => {
 //Choose your camera
 
-navigator.mediaDevices.enumerateDevices()
-  .then(function(devices) {
-    if (Array.isArray(devices)) {
-        devices.forEach((device) => {
-          if (device.kind === "videoinput") {
-            if (device.label.includes("Source 3")) { //personal Cam 
-              navigator.getUserMedia({
-                video: {
-                    deviceId: device.deviceId
-                }},
-                   stream => cam.srcObject = stream,
-                   error => console.error(error)
-                )
-            }
-          }
-        });
-      }
-  })
-  .catch(function(err) {
-    console.log(err.name + ": " + err.message);
-  });
 
-navigator.mediaDevices.getUserMedia({video:true}).then(stream => {
-    cam => cam.srcObject = stream,
-    error => console.log(err)
-})
+const constraints = {
+    video: {
+      width: {
+        min: 1280,
+        ideal: 1920,
+        max: 2560,
+      },
+      height: {
+        min: 720,
+        ideal: 1080,
+        max: 1440,
+      },
+      facingMode: "user"
+    },
+  }
+  
+  const videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+  cam.srcObject = videoStream;
+
 }
 const loadLabels = () => {
     const labels = ['Gustavo'];
