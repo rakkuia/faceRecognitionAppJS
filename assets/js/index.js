@@ -2,24 +2,7 @@
 
 const startVideo = () => {
 //Choose your camera
-navigator.mediaDevices.enumerateDevices().then((devices) => {
-    if (Array.isArray(devices)) {
-      devices.forEach((device) => {
-        if (device.kind === "videoinput") {
-          if (device.label.includes("Source 3")) { 
-            navigator.getUserMedia({
-              video: {
-                  deviceId: device.deviceId
-              }},
-                 stream => cam.srcObject = stream,
-                 error => console.error(error)
-              )
-          }
-        }
-      });
-    }
-  });
-}
+navigator.mediaDevices.getUserMedia({video: true})
 
 const loadLabels = () => {
     const labels = ['Gustavo'];
