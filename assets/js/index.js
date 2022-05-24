@@ -72,3 +72,4 @@ cam.addEventListener('play', async () => {
        })
     }, 1)
 })
+}
