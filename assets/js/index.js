@@ -1,9 +1,35 @@
-//const cam = document.getElementById('cam');
+cam = document.getElementById('cam');
 
 const startVideo = () => {
 //Choose your camera
-navigator.mediaDevices.getUserMedia({video: true})
 
+navigator.mediaDevices.enumerateDevices()
+  .then(function(devices) {
+    if (Array.isArray(devices)) {
+        devices.forEach((device) => {
+          if (device.kind === "videoinput") {
+            if (device.label.includes("Source 3")) { //personal Cam 
+              navigator.getUserMedia({
+                video: {
+                    deviceId: device.deviceId
+                }},
+                   stream => cam.srcObject = stream,
+                   error => console.error(error)
+                )
+            }
+          }
+        });
+      }
+  })
+  .catch(function(err) {
+    console.log(err.name + ": " + err.message);
+  });
+
+navigator.mediaDevices.getUserMedia({video:true}).then(stream => {
+    cam => cam.srcObject = stream,
+    error => console.log(err)
+})
+}
 const loadLabels = () => {
     const labels = ['Gustavo'];
     return Promise.all(labels.map(async label => {
@@ -35,7 +61,6 @@ cam.addEventListener('play', async () => {
         width: cam.width,
         height: cam.height
     }
-
 
     const labels = await loadLabels();
     faceapi.matchDimensions(canvas, canvasSize);
@@ -72,4 +97,3 @@ cam.addEventListener('play', async () => {
        })
     }, 1)
 })
-}

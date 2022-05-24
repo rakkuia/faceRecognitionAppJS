@@ -6,6 +6,17 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgb(133, 133, 133);
+}
+
+h1{
+    display: inline;
+}
+
+video{
+    border: 5px solid rgb(83, 83, 83);
+    padding:10px;
+    border-radius: 10px;
 }
 
 canvas{
